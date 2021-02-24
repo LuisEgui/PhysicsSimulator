@@ -6,5 +6,4 @@ branches:
     - "/^release-[0-999].[0-999]$/"
     - master
 script:
-  - mvn verify org.jacoco:jacoco-maven-plugin:prepare-agent
-  - mvn verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=ucm-tp2 -Dsonar.login=$SONAR
+  - mvn verify org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=ucm-tp2 -Dsonar.login=$SONAR
