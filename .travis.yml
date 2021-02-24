@@ -1,0 +1,9 @@
+language: java
+#jdk: openjdk14 #problems with sonar-maven-plugin
+branches:
+  only:
+    - develop
+    - "/^release-[0-999].[0-999]$/"
+    - master
+script:
+  - mvn verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=ucm-tp2 -Dsonar.login=$SONAR
