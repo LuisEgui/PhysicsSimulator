@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.pow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Vector2DTest {
     private Vector2D vector;
@@ -93,4 +93,11 @@ public class Vector2DTest {
         assertEquals("[5.0,10.0]", vector.toString());
     }
 
+    @Test
+    void testEquals() {
+        Vector2D vRef = new Vector2D(5, 10);
+        Vector2D vAux = new Vector2D();
+        assertEquals(vRef, vector);
+        assertNotEquals(vAux, vector);
+    }
 }
