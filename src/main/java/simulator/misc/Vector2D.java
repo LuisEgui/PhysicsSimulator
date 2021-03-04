@@ -1,6 +1,7 @@
 package simulator.misc;
 
 import org.json.JSONArray;
+import java.util.Objects;
 
 public class Vector2D {
 
@@ -12,7 +13,7 @@ public class Vector2D {
 	}
 
 	public Vector2D(Vector2D v) {
-		assert (v != null);
+		Objects.requireNonNull(v);
 		x = v.x;
 		y = v.y;
 	}
@@ -23,7 +24,7 @@ public class Vector2D {
 	}
 
 	public double dot(Vector2D that) {
-		assert (that != null);
+		Objects.requireNonNull(that);
 		return x * that.x + y * that.y;
 	}
 
@@ -32,17 +33,17 @@ public class Vector2D {
 	}
 
 	public double distanceTo(Vector2D that) {
-		assert (that != null);
+		Objects.requireNonNull(that);
 		return minus(that).magnitude();
 	}
 
 	public Vector2D plus(Vector2D that) {
-		assert (that != null);
+		Objects.requireNonNull(that);
 		return new Vector2D(x + that.x, y + that.y);
 	}
 
 	public Vector2D minus(Vector2D that) {
-		assert (that != null);
+		Objects.requireNonNull(that);
 		return new Vector2D(x - that.x, y - that.y);
 	}
 
