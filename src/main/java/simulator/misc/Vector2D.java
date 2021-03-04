@@ -73,8 +73,20 @@ public class Vector2D {
 		return a;
 	}
 
+	@Override
 	public String toString() {
 		return "[" + x + "," + y + "]";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vector2D other = (Vector2D) obj;
+		return x == other.getX() && y == other.getY();
+	}
 }
