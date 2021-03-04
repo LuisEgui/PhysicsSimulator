@@ -56,6 +56,7 @@ public class Body {
 
         @Override
         public Body build() {
+            this.body.force = new Vector2D();
             return this.body;
         }
     }
