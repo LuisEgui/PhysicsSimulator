@@ -51,6 +51,8 @@ public class Body {
         @Override
         public IBodyBuilder.Optionals mass(double m) {
             this.body.mass = m;
+            if(m <= 0)
+                throw new IllegalArgumentException("Body mass has to be > 0!");
             return this;
         }
 
@@ -82,11 +84,11 @@ public class Body {
     }
 
     public void addForce(Vector2D force) {
-        this.force.plus(force);
+        this.force = this.force.plus(force);
     }
 
     public void resetForce() {
-        force.scale(0);
+        force = force.scale(0);
     }
 
     public void move(double time) {
@@ -104,8 +106,20 @@ public class Body {
         return state;
     }
 
+    @Override
     public String toString() {
         return getState().toString();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Body other = (Body) obj;
+        return id.equals(other.getId());
+    }
 }
