@@ -24,9 +24,4 @@ public class Body extends simulator.model.FluentBuilder.Body {
             return new Body(this);
         }
     }
-
-    public static void main(String[] args) {
-        Body body = new Body.Builder().id("b1").velocity(new Vector2D()).position(new Vector2D(0,0)).mass(50).build();
-        System.out.println(body.toString());
-    }
 }
