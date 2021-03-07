@@ -1,125 +1,32 @@
 package simulator.model;
 
-import org.json.JSONObject;
 import simulator.misc.Vector2D;
 
-import java.util.*;
 
-public class Body {
-    protected String id;
-    private Vector2D velocity;
-    private Vector2D force;
-    private Vector2D position;
-    private double mass;
+public class Body extends simulator.model.FluentBuilder.Body {
 
-    public Body() {
+    private Body(Builder builder) {
+        super(builder);
     }
 
-    public IBodyBuilder.Id builder() {
-        return new BodyBuilder();
-    }
-
-    public static class BodyBuilder implements IBodyBuilder.Id, IBodyBuilder.Velocity, IBodyBuilder.Position,
-            IBodyBuilder.Mass, IBodyBuilder.Optionals {
-        private Body body;
-
-        public BodyBuilder() {
-            this.body = new Body();
+    public static class Builder extends simulator.model.FluentBuilder.Body.Builder<Builder> {
+        public Builder() {
+            super();
         }
 
         @Override
-        public IBodyBuilder.Velocity id(String id) {
-            Objects.requireNonNull(id);
-            this.body.id = id;
-            return this;
-        }
-
-        @Override
-        public IBodyBuilder.Position velocity(Vector2D v) {
-            Objects.requireNonNull(v);
-            this.body.velocity = new Vector2D(v);
-            return this;
-        }
-
-        @Override
-        public IBodyBuilder.Mass position(Vector2D p) {
-            Objects.requireNonNull(p);
-            this.body.position = new Vector2D(p);
-            return this;
-        }
-
-        @Override
-        public IBodyBuilder.Optionals mass(double m) {
-            this.body.mass = m;
-            if(m <= 0)
-                throw new IllegalArgumentException("Body mass has to be > 0!");
+        protected Builder self() {
             return this;
         }
 
         @Override
         public Body build() {
-            this.body.force = new Vector2D();
-            return this.body;
+            return new Body(this);
         }
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Vector2D getVelocity() {
-        return velocity;
-    }
-
-    public Vector2D getForce() {
-        return force;
-    }
-
-    public Vector2D getPosition() {
-        return position;
-    }
-
-    public double getMass() {
-        return mass;
-    }
-
-    public void addForce(Vector2D force) {
-        this.force = this.force.plus(force);
-    }
-
-    public void resetForce() {
-        force = force.scale(0);
-    }
-
-    public void move(double time) {
-        Vector2D acceleration = force.scale(1/mass);
-        velocity = velocity.plus(acceleration.scale(time));
-        position = position.plus(velocity.scale(time).plus(acceleration.scale(0.5*Math.pow(time, 2))));
-    }
-
-    public JSONObject getState() {
-        JSONObject state = new JSONObject();
-        state.put("id", id);
-        state.put("p", position.toString());
-        state.put("v", velocity.toString());
-        state.put("m", String.valueOf(mass));
-        return state;
-    }
-
-    @Override
-    public String toString() {
-        return getState().toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Body other = (Body) obj;
-        return id.equals(other.getId());
+    public static void main(String[] args) {
+        Body body = new Body.Builder().id("b1").velocity(new Vector2D()).position(new Vector2D(0,0)).mass(50).build();
+        System.out.println(body.toString());
     }
 }
