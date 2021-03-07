@@ -3,13 +3,13 @@ package simulator.model;
 import simulator.misc.Vector2D;
 
 
-public class Body extends simulator.model.FluentBluilder.Body {
+public class Body extends simulator.model.FluentBuilder.Body {
 
     private Body(Builder builder) {
         super(builder);
     }
 
-    public static class Builder extends simulator.model.FluentBluilder.Body.Builder<Builder> {
+    public static class Builder extends simulator.model.FluentBuilder.Body.Builder<Builder> {
         public Builder() {
             super();
         }

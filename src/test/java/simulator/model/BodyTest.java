@@ -66,12 +66,12 @@ public class BodyTest {
         double expectedVelocity = velocity.plus(force.scale(1/mass).scale(time)).magnitude();
         double expectedPosition = position.plus(
                 velocity.scale(time).plus(force.scale(1/mass).scale(0.5*Math.pow(time, 2)))
-                ).magnitude();
+        ).magnitude();
         body.addForce(force);
         body.move(time);
         assertEquals(expectedVelocity, body.getVelocity().magnitude(), 0.01);
         assertEquals(Double.valueOf(expectedPosition).longValue(),
-                    Double.valueOf(body.getPosition().magnitude()).longValue(),
+                Double.valueOf(body.getPosition().magnitude()).longValue(),
                 1e4);
     }
 
