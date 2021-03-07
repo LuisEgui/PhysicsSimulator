@@ -21,7 +21,7 @@ public class BodyTest {
         velocity = new Vector2D(0.0e00, 1.4e03);
         position = new Vector2D(-3.5e10, 0.0e00);
         mass = 3.0e28;
-        body = new Body().builder().id(id).velocity(velocity).position(position).mass(mass).build();
+        body = new Body.Builder().id(id).velocity(velocity).position(position).mass(mass).build();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class BodyTest {
     @Test
     void testBodyWithInvalidMass() {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> new Body().builder().id(id)
+                () -> new Body.Builder().id(id)
                         .velocity(velocity).position(position)
                         .mass(0).build());
         assertEquals("Body mass has to be > 0!", exception.getMessage());
@@ -77,9 +77,9 @@ public class BodyTest {
 
     @Test
     void testEquals() {
-        Body expectedEqualsBody = new Body().builder().id("b1").velocity(velocity).position(position)
+        Body expectedEqualsBody = new Body.Builder().id("b1").velocity(velocity).position(position)
                 .mass(mass).build();
-        Body notEqualBody = new Body().builder().id("b2").velocity(velocity).position(position)
+        Body notEqualBody = new Body.Builder().id("b2").velocity(velocity).position(position)
                 .mass(mass).build();
         assertNotEquals(notEqualBody, body);
         assertEquals(expectedEqualsBody, body);
