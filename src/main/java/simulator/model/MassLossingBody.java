@@ -14,8 +14,8 @@ public class MassLossingBody extends simulator.model.FluentBuilder.Body {
     }
 
     public static class Builder extends Body.Builder<Builder> {
-        private double lossFactor;
-        private double lossFrequency;
+        private double lossFactor = 0;
+        private double lossFrequency = 0;
 
         public Builder() {
             super();
