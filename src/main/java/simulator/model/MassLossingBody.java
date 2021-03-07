@@ -1,6 +1,5 @@
 package simulator.model;
 
-import simulator.misc.Vector2D;
 import simulator.model.FluentBuilder.Body;
 
 public class MassLossingBody extends simulator.model.FluentBuilder.Body {
@@ -32,7 +31,7 @@ public class MassLossingBody extends simulator.model.FluentBuilder.Body {
         }
 
         public Builder lossFactor(double lossFactor) {
-            if(lossFactor < 0)
+            if(lossFactor < 0 || lossFactor > 1)
                 throw new IllegalArgumentException("Loss factor must be in range: [0-1]!");
             this.lossFactor = lossFactor;
             return self();
@@ -40,17 +39,17 @@ public class MassLossingBody extends simulator.model.FluentBuilder.Body {
 
         public Builder lossFrequency(double lossFrequency) {
             if(lossFrequency < 0)
-                throw new IllegalArgumentException("A MassLossingBody cant gain mass! \"lossFrequency must be >= 0");
+                throw new IllegalArgumentException("A MassLossingBody cant gain mass! \"lossFrequency\" must be >= 0");
             this.lossFrequency = lossFrequency;
             return self();
         }
+    }
 
-        public double getLossFactor() {
-            return lossFactor;
-        }
+    public double getLossFactor() {
+        return lossFactor;
+    }
 
-        public double getLossFrequency() {
-            return lossFrequency;
-        }
+    public double getLossFrequency() {
+        return lossFrequency;
     }
 }
