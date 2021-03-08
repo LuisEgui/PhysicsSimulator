@@ -5,16 +5,19 @@ import simulator.model.FluentBuilder.Body;
 public class MassLossingBody extends simulator.model.FluentBuilder.Body {
     private double lossFactor;
     private double lossFrequency;
+    private double movementTime;
 
     private MassLossingBody(Builder builder) {
         super(builder);
         this.lossFactor = builder.lossFactor;
         this.lossFrequency = builder.lossFrequency;
+        this.movementTime = builder.movementTime;
     }
 
     public static class Builder extends Body.Builder<Builder> {
         private double lossFactor = 0;
         private double lossFrequency = 0;
+        private double movementTime = 0;
 
         public Builder() {
             super();
@@ -51,5 +54,33 @@ public class MassLossingBody extends simulator.model.FluentBuilder.Body {
 
     public double getLossFrequency() {
         return lossFrequency;
+    }
+
+    private boolean hasMass() { return (this.getMass() > 0 && this.getMass() != 0); }
+
+    private void massLoss() {
+        mass *= (1-lossFactor);
+    }
+
+    @Override
+    public void move(double time) {
+        movementTime += time;
+        if(hasMass()) {
+            if(movementTime >= lossFrequency) {
+                int kPeriods = (int)(movementTime/lossFrequency);
+                double deltaTime = kPeriods * lossFrequency;
+                for(int i = 0; i < kPeriods; i++) {
+                    if(hasMass()) {
+                        super.move(lossFrequency);
+                        massLoss();
+                    }
+                    else break;
+                }
+                if(hasMass())
+                    super.move(movementTime - deltaTime);
+                movementTime = 0;
+            } else if (hasMass())
+                super.move(movementTime);
+        }
     }
 }

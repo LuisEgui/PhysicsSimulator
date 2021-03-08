@@ -1,8 +1,5 @@
 package simulator.model;
 
-import simulator.misc.Vector2D;
-
-
 public class Body extends simulator.model.FluentBuilder.Body {
 
     private Body(Builder builder) {

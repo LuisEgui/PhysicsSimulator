@@ -7,10 +7,10 @@ import java.util.Objects;
 
 public abstract class Body {
     protected String id;
-    private Vector2D velocity;
-    private Vector2D force;
-    private Vector2D position;
-    private double mass;
+    protected Vector2D velocity;
+    protected Vector2D force;
+    protected Vector2D position;
+    protected double mass;
 
     protected Body(Builder<?> builder) {
         this.id = builder.id;
@@ -97,9 +97,11 @@ public abstract class Body {
     }
 
     public void move(double time) {
-        Vector2D acceleration = force.scale(1/mass);
-        velocity = velocity.plus(acceleration.scale(time));
-        position = position.plus(velocity.scale(time).plus(acceleration.scale(0.5*Math.pow(time, 2))));
+        if(time > 0) {
+            Vector2D acceleration = force.scale(1/mass);
+            velocity = velocity.plus(acceleration.scale(time));
+            position = position.plus(velocity.scale(time).plus(acceleration.scale(0.5*Math.pow(time, 2))));
+        }
     }
 
     public JSONObject getState() {
