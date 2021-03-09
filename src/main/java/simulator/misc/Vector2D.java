@@ -7,6 +7,7 @@ public class Vector2D {
 
 	double x;
 	double y;
+	private int hashCode;
 
 	public Vector2D() {
 		x = y = 0.0;
@@ -16,6 +17,7 @@ public class Vector2D {
 		Objects.requireNonNull(v);
 		x = v.x;
 		y = v.y;
+		hashCode = v.hashCode;
 	}
 
 	public Vector2D(double x, double y) {
@@ -76,6 +78,17 @@ public class Vector2D {
 	@Override
 	public String toString() {
 		return "[" + x + "," + y + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		int result = hashCode;
+		if(result == 0) {
+			result = Double.hashCode(x);
+			result = 31 * result + Double.hashCode(y);
+			hashCode = result;
+		}
+		return result;
 	}
 
 	@Override

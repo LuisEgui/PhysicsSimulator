@@ -11,6 +11,7 @@ public abstract class Body {
     protected Vector2D force;
     protected Vector2D position;
     protected double mass;
+    private int hashCode;
 
     protected Body(Builder<?> builder) {
         this.id = builder.id;
@@ -116,6 +117,17 @@ public abstract class Body {
     @Override
     public String toString() {
         return getState().toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = hashCode;
+        if(result == 0) {
+            result = Double.hashCode(mass);
+            result = 31 * result + id.hashCode();
+            hashCode = result;
+        }
+        return result;
     }
 
     @Override
