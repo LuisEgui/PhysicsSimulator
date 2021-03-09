@@ -22,8 +22,8 @@ public class MassLossingBodyTest {
         velocity = new Vector2D(0.0e00, 1.4e03);
         position = new Vector2D(-3.5e10, 0.0e00);
         mass = 3.0e28;
-        lossFactor = 0.05;
-        lossFrequency = 0.001;
+        lossFactor = 0.50;
+        lossFrequency = 1;
         body = new MassLossingBody.Builder().id(id).velocity(velocity).position(position).mass(mass)
                 .lossFactor(lossFactor).lossFrequency(lossFrequency)
                 .build();
@@ -70,13 +70,23 @@ public class MassLossingBodyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {-1, 0, 1, 2.5, 3, 4, 5, 10})
+    @ValueSource(doubles = {0, 1.5, 1, 2, 3, 4, 5, 10})
     void testMove(double time) {
         Vector2D force = new Vector2D(1.00e29, 0.00);
+        double expectedMass = mass / Math.floor(Math.pow(2, time));
         body.addForce(force);
-        System.out.println("mass_i(t = " + time + ") = " + mass);
         body.move(time);
-        System.out.println("mass_f(t = " + time + ") = " + body.getMass());
+        assertEquals(expectedMass, body.getMass());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, -2, -2.5})
+    void testMoveInvalidTime(double time) {
+        Vector2D force = new Vector2D(1.00e29, 0.00);
+        double expectedMass = mass;
+        body.addForce(force);
+        body.move(time);
+        assertEquals(expectedMass, mass);
     }
 
 }
