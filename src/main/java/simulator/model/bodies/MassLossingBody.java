@@ -1,8 +1,8 @@
-package simulator.model;
+package simulator.model.bodies;
 
-import simulator.model.FluentBuilder.Body;
+import simulator.model.bodies.FluentBuilder.Body;
 
-public class MassLossingBody extends simulator.model.FluentBuilder.Body {
+public class MassLossingBody extends simulator.model.bodies.FluentBuilder.Body {
     private double lossFactor;
     private double lossFrequency;
     private double movementTime;

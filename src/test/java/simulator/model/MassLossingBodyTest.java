@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import simulator.misc.Vector2D;
+import simulator.model.bodies.Body;
+import simulator.model.bodies.MassLossingBody;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MassLossingBodyTest {

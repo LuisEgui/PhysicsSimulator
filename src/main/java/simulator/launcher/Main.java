@@ -11,8 +11,8 @@ import org.json.JSONObject;
 
 import simulator.control.StateComparator;
 import simulator.factories.Factory;
-import simulator.model.Body;
-import simulator.model.ForceLaws;
+import simulator.model.bodies.Body;
+import simulator.model.forceLaws.ForceLaws;
 
 public class Main {
 

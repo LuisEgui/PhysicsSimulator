@@ -1,4 +1,6 @@
-package simulator.model;
+package simulator.model.forceLaws;
+
+import simulator.model.bodies.Body;
 
 import java.util.List;
 

@@ -7,6 +7,7 @@ import simulator.misc.Vector2D;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import simulator.model.bodies.Body;
 
 public class BodyTest {
     private Body body;

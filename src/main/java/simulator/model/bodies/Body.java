@@ -1,12 +1,12 @@
-package simulator.model;
+package simulator.model.bodies;
 
-public class Body extends simulator.model.FluentBuilder.Body {
+public class Body extends simulator.model.bodies.FluentBuilder.Body {
 
     private Body(Builder builder) {
         super(builder);
     }
 
-    public static class Builder extends simulator.model.FluentBuilder.Body.Builder<Builder> {
+    public static class Builder extends simulator.model.bodies.FluentBuilder.Body.Builder<Builder> {
         public Builder() {
             super();
         }

@@ -1,4 +1,4 @@
-package simulator.model.FluentBuilder;
+package simulator.model.bodies.FluentBuilder;
 
 import org.json.JSONObject;
 import simulator.misc.Vector2D;
@@ -138,7 +138,7 @@ public abstract class Body {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        simulator.model.FluentBuilder.Body other = (simulator.model.FluentBuilder.Body) obj;
+        simulator.model.bodies.FluentBuilder.Body other = (simulator.model.bodies.FluentBuilder.Body) obj;
         return id.equals(other.getId());
     }
 }
