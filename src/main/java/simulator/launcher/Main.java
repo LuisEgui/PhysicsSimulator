@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import simulator.control.StateComparator;
 import simulator.factories.Factory;
 import simulator.model.bodies.Body;
-import simulator.model.forceLaws.ForceLaws;
+import simulator.model.forcelaws.ForceLaws;
 
 public class Main {
 

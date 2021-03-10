@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import simulator.model.bodies.Body;
 
-public class BodyTest {
+class BodyTest {
     private Body body;
     private String id;
     private Vector2D velocity;
@@ -38,9 +38,7 @@ public class BodyTest {
     @Test
     void testBodyWithInvalidMass() {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> new Body.Builder().id(id)
-                        .velocity(velocity).position(position)
-                        .mass(0).build());
+                this::executeInvalidMass);
         assertEquals("Body mass has to be > 0!", exception.getMessage());
     }
 
@@ -86,4 +84,9 @@ public class BodyTest {
         assertEquals(expectedEqualsBody, body);
     }
 
+    private void executeInvalidMass() {
+        new Body.Builder().id(id)
+                .velocity(velocity).position(position)
+                .mass(0).build();
+    }
 }

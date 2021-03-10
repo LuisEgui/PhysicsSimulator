@@ -10,7 +10,7 @@ import simulator.model.bodies.MassLossingBody;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MassLossingBodyTest {
+class MassLossingBodyTest {
     private MassLossingBody body;
     private String id;
     private Vector2D velocity;
@@ -47,27 +47,21 @@ public class MassLossingBodyTest {
     @Test
     void testBodyWithInvalidMass() {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> new Body.Builder().id(id)
-                        .velocity(velocity).position(position)
-                        .mass(0).build());
+                this::executeInvalidMass);
         assertEquals("Body mass has to be > 0!", exception.getMessage());
     }
 
     @Test
     void testBodyWithInvalidLossFactor() {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> new MassLossingBody.Builder().id(id)
-                        .velocity(velocity).position(position)
-                        .mass(mass).lossFactor(-1).build());
+                this::executeInvalidLossFactor);
         assertEquals("Loss factor must be in range: [0-1]!", exception.getMessage());
     }
 
     @Test
     void testBodyWithInvalidLossFrequency() {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> new MassLossingBody.Builder().id(id)
-                        .velocity(velocity).position(position)
-                        .mass(mass).lossFactor(lossFactor).lossFrequency(-1).build());
+                this::executeInvalidLossFrequency);
         assertEquals("A MassLossingBody cant gain mass! \"lossFrequency\" must be >= 0",
                         exception.getMessage());
     }
@@ -92,4 +86,21 @@ public class MassLossingBodyTest {
         assertEquals(expectedMass, mass);
     }
 
+    private void executeInvalidMass() {
+        new Body.Builder().id(id)
+                .velocity(velocity).position(position)
+                .mass(0).build();
+    }
+
+    private void executeInvalidLossFactor() {
+        new MassLossingBody.Builder().id(id)
+                .velocity(velocity).position(position)
+                .mass(mass).lossFactor(-1).build();
+    }
+
+    private void executeInvalidLossFrequency() {
+        new MassLossingBody.Builder().id(id)
+                .velocity(velocity).position(position)
+                .mass(mass).lossFactor(lossFactor).lossFrequency(-1).build();
+    }
 }
