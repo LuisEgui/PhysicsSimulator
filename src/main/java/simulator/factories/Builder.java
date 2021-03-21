@@ -14,8 +14,6 @@ public abstract class Builder<T> {
     public T createInstance(JSONObject info) {
         Objects.requireNonNull(info);
         type = TypeTag.valueOf(((String) info.get("type")).toUpperCase());
-        if(type == null)
-            throw new IllegalArgumentException("Incorrect typetag!");
         return createTheInstance((JSONObject) info.get("data"));
     }
 
