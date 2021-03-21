@@ -17,9 +17,8 @@ public abstract class Builder<T> {
         return createTheInstance((JSONObject) info.get("data"));
     }
 
-    // TODO
     public JSONObject getBuilderInfo() {
-        return new JSONObject();
+        return createData();
     }
 
     public abstract T createTheInstance(JSONObject data);
