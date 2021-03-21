@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static java.lang.Math.pow;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class Vector2DTest {
+class Vector2DTest {
     private Vector2D vector;
 
     @BeforeEach
