@@ -38,5 +38,4 @@ public class BasicBodyBuilder extends Builder<Body> {
         template.put("desc", DESCRIPTION);
         return template;
     }
-
 }
