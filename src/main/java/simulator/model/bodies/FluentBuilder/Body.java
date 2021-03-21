@@ -108,8 +108,8 @@ public abstract class Body {
     public JSONObject getState() {
         JSONObject state = new JSONObject();
         state.put("id", id);
-        state.put("p", position.toString());
-        state.put("v", velocity.toString());
+        state.put("p", position.asJSONArray());
+        state.put("v", velocity.asJSONArray());
         state.put("m", String.valueOf(mass));
         return state;
     }
