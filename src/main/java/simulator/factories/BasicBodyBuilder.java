@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class BasicBodyBuilder extends Builder<Body> {
 
+    private static final String DESCRIPTION = "Basic body";
+
     public BasicBodyBuilder() {
         super();
     }
@@ -31,7 +33,10 @@ public class BasicBodyBuilder extends Builder<Body> {
 
     @Override
     public JSONObject createData() {
-        return null;
+        JSONObject template = new JSONObject();
+        template.put("type", super.type.toString().toLowerCase());
+        template.put("desc", DESCRIPTION);
+        return template;
     }
 
 }
