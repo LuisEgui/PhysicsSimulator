@@ -1,5 +1,6 @@
 package simulator.model.bodies;
 
+import org.json.JSONObject;
 import simulator.model.bodies.FluentBuilder.Body;
 
 public class MassLossingBody extends simulator.model.bodies.FluentBuilder.Body {
@@ -82,5 +83,11 @@ public class MassLossingBody extends simulator.model.bodies.FluentBuilder.Body {
             } else if (hasMass())
                 super.move(movementTime);
         }
+    }
+
+    @Override
+    public JSONObject getState() {
+        return super.getState().put("freq", lossFrequency)
+                .put("factor", lossFactor);
     }
 }
