@@ -17,17 +17,28 @@ class MovingTowardsFixedPointBuilderTest {
     @BeforeEach
     void before() {
         info.put("type", "mtcp");
-        data.put("c", new Vector2D().toString());
-        data.put("g", 9.81);
+        data.put("c", new Vector2D(2, 0).asJSONArray());
+        data.put("g", 5);
         forceLawBuilder = new MovingTowardsFixedPointBuilder();
         forceLaw = new MovingTowardsFixedPoint();
     }
 
     @Test
-    void testCreateInstance() {
+    void testCreateDefaultInstance() {
+        info.put("data", new JSONObject());
+        MovingTowardsFixedPoint expectedForceLaw = new MovingTowardsFixedPoint(new Vector2D(), 9.81);
+        forceLaw = forceLawBuilder.createInstance(info);
+        assertEquals(expectedForceLaw.getG(), forceLaw.getG());
+        assertEquals(expectedForceLaw.getOrigin(), forceLaw.getOrigin());
+    }
+
+    @Test
+    void testCreateCustomInstance() {
         info.put("data", data);
-        MovingTowardsFixedPoint expectedForceLaw = forceLawBuilder.createInstance(info);
-        assertNotEquals(null, expectedForceLaw);
+        MovingTowardsFixedPoint expectedForceLaw = new MovingTowardsFixedPoint(new Vector2D(2,0), 5);
+        forceLaw = forceLawBuilder.createInstance(info);
+        assertEquals(expectedForceLaw.getOrigin(), forceLaw.getOrigin());
+        assertEquals(expectedForceLaw.getG(), forceLaw.getG());
     }
 
     @Test

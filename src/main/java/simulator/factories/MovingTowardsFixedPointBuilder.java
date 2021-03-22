@@ -1,6 +1,9 @@
 package simulator.factories;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import simulator.misc.Vector2D;
 import simulator.model.forcelaws.MovingTowardsFixedPoint;
 
 import java.util.Objects;
@@ -13,8 +16,17 @@ public class MovingTowardsFixedPointBuilder extends Builder<MovingTowardsFixedPo
     @Override
     public MovingTowardsFixedPoint createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);
+        double g;
+        Vector2D origin;
         if(super.type == TypeTag.MTCP) {
-            forceLaw = new MovingTowardsFixedPoint();
+            try {
+                JSONArray jOrigin = data.getJSONArray("c");
+                origin = new Vector2D((double) jOrigin.get(0), (double) jOrigin.get(1));
+                g = data.getDouble("g");
+                forceLaw = new MovingTowardsFixedPoint(origin, g);
+            } catch (JSONException jsonException) {
+                forceLaw = new MovingTowardsFixedPoint();
+            }
             return forceLaw;
         } else
             throw new IllegalArgumentException("Typetag doesn't match with the builder constructor!");
