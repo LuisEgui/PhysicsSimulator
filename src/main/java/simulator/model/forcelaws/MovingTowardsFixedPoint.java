@@ -8,10 +8,24 @@ import java.util.stream.Collectors;
 
 public class MovingTowardsFixedPoint implements ForceLaws {
 
-    private static final double G = 9.81;
+    private double g = 9.81;
+    private Vector2D origin;
 
     public MovingTowardsFixedPoint() {
-        // Nothing to construct.
+        origin = new Vector2D();
+    }
+
+    public MovingTowardsFixedPoint(Vector2D point, double g) {
+        origin = point;
+        this.g = g;
+    }
+
+    public double getG() {
+        return g;
+    }
+
+    public Vector2D getOrigin() {
+        return origin;
     }
 
     @Override
@@ -29,6 +43,7 @@ public class MovingTowardsFixedPoint implements ForceLaws {
     }
 
     private Vector2D calculateForceTowardsOrigin(Body bi) {
-        return bi.getPosition().scale(-G * bi.getMass());
+        Vector2D direction = bi.getPosition().minus(origin);
+        return direction.scale(-g * bi.getMass());
     }
 }
