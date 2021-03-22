@@ -7,7 +7,7 @@ import simulator.misc.Vector2D;
 import simulator.model.bodies.MassLossingBody;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MassLossingBodyTest {
+class MassLossingBodyBuilderTest {
     MassLossingBodyBuilder massLossingBodyBuilder;
     MassLossingBody body;
     String id;
