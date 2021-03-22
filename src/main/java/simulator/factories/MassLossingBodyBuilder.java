@@ -10,11 +10,12 @@ import java.util.Objects;
 public class MassLossingBodyBuilder extends Builder<MassLossingBody> {
 
     private static final String DESCRIPTION = "A body that losses mass each time its moves!";
+    private MassLossingBody body;
 
     @Override
     public MassLossingBody createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);
-        MassLossingBody body;
+
         if(super.type == TypeTag.MLB) {
             JSONArray jVelocity = data.getJSONArray("v");
             JSONArray jPosition = data.getJSONArray("p");
@@ -37,6 +38,7 @@ public class MassLossingBodyBuilder extends Builder<MassLossingBody> {
         JSONObject template = new JSONObject();
         template.put("type", super.type.toString().toLowerCase());
         template.put("desc", DESCRIPTION);
+        template.put("data", body.getState());
         return template;
     }
 }
