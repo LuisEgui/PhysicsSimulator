@@ -7,12 +7,19 @@ import java.util.stream.Collectors;
 
 public class NewtonUniversalGravitation implements ForceLaws {
 
-    private static final double G = 6.67E-11;
+    private double g = 6.67E-11;
 
     public NewtonUniversalGravitation() {
         // Nothing to construct.
     }
 
+    public NewtonUniversalGravitation(double g) {
+        this.g = g;
+    }
+
+    public double getG() {
+        return g;
+    }
 
     @Override
     public void apply(List<? extends Body> bs) {
@@ -34,7 +41,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
     private Vector2D calculateForceBetweenBodies(Body bi, Body bj) {
         Vector2D direction = bj.getPosition().minus(bi.getPosition());
         Vector2D force = direction.unitVector();
-        force = force.scale(G* bi.getMass() * bj.getMass()).scale(1/Math.pow(direction.magnitude(), 2));
+        force = force.scale(g* bi.getMass() * bj.getMass()).scale(1/Math.pow(direction.magnitude(), 2));
         return force;
     }
 

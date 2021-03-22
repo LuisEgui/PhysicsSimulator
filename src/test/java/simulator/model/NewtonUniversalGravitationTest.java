@@ -6,7 +6,6 @@ import simulator.misc.Vector2D;
 import simulator.model.bodies.Body;
 import simulator.model.forcelaws.NewtonUniversalGravitation;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,13 @@ class NewtonUniversalGravitationTest {
             nug = new NewtonUniversalGravitation();
             bodies = new ArrayList<>();
             bodies.add(b1); bodies.add(b2);
+    }
+
+    @Test
+    void testNewtonUniversalGravitation() {
+        double expectedG = 5E-11;
+        nug = new NewtonUniversalGravitation(5E-11);
+        assertEquals(expectedG, nug.getG());
     }
 
     @Test
