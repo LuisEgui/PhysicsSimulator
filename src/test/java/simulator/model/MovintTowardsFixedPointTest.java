@@ -29,6 +29,15 @@ class MovintTowardsFixedPointTest {
     }
 
     @Test
+    void testMovingTowardsFixedPoint() {
+        Vector2D expectedOrigin = new Vector2D(1,0);
+        double expectedG = 5;
+        mtfp = new MovingTowardsFixedPoint(new Vector2D(1,0), 5);
+        assertEquals(expectedG, mtfp.getG());
+        assertEquals(expectedOrigin, mtfp.getOrigin());
+    }
+
+    @Test
     void testApply() {
         Vector2D expectedForce;
         mtfp.apply(bodies);
