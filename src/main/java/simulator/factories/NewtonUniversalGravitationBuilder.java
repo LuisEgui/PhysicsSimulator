@@ -7,12 +7,12 @@ import java.util.Objects;
 
 public class NewtonUniversalGravitationBuilder extends Builder<NewtonUniversalGravitation> {
 
-    private static final String DESCRIPTION = "Newton’s law of universal gravitation";
+    private static final String DESCRIPTION = "Newton's law of universal gravitation";
+    private NewtonUniversalGravitation newtonUniversalGravitation;
 
     @Override
     public NewtonUniversalGravitation createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);
-        NewtonUniversalGravitation newtonUniversalGravitation;
         if(super.type == TypeTag.NLUG) {
             newtonUniversalGravitation = new NewtonUniversalGravitation();
             return newtonUniversalGravitation;
@@ -23,8 +23,11 @@ public class NewtonUniversalGravitationBuilder extends Builder<NewtonUniversalGr
     @Override
     public JSONObject createData() {
         JSONObject template = new JSONObject();
+        JSONObject data = new JSONObject();
+        data.put("G", newtonUniversalGravitation.getG());
         template.put("type", super.type.toString().toLowerCase());
         template.put("desc", DESCRIPTION);
+        template.put("data", data);
         return template;
     }
 }
