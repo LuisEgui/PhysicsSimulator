@@ -25,6 +25,7 @@ public class NoForceBuilder extends Builder<NoForce> {
         JSONObject template = new JSONObject();
         template.put("type", super.type.toString().toLowerCase());
         template.put("desc", DESCRIPTION);
+        template.put("data", new JSONObject());
         return template;
     }
 }
