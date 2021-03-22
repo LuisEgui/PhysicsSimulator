@@ -9,6 +9,7 @@ import java.util.Objects;
 public class BasicBodyBuilder extends Builder<Body> {
 
     private static final String DESCRIPTION = "Basic body";
+    private Body body;
 
     public BasicBodyBuilder() {
         super();
@@ -17,7 +18,6 @@ public class BasicBodyBuilder extends Builder<Body> {
     @Override
     public Body createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);
-        Body body;
         if(super.type == TypeTag.BASIC) {
             JSONArray jVelocity = data.getJSONArray("v");
             JSONArray jPosition = data.getJSONArray("p");
@@ -36,6 +36,7 @@ public class BasicBodyBuilder extends Builder<Body> {
         JSONObject template = new JSONObject();
         template.put("type", super.type.toString().toLowerCase());
         template.put("desc", DESCRIPTION);
+        template.put("data", body.getState());
         return template;
     }
 }
