@@ -26,7 +26,6 @@ class NewtonUniversalGravitationBuilderTest {
         info.put("data", data);
         NewtonUniversalGravitation expectedForceLaw = newtonUniversalGravitationBuilder.createInstance(info);
         assertNotEquals(null, expectedForceLaw);
-        System.out.println(newtonUniversalGravitationBuilder.getBuilderInfo().toString());
     }
 
     @Test
