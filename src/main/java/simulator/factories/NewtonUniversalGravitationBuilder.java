@@ -1,5 +1,6 @@
 package simulator.factories;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import simulator.model.forcelaws.NewtonUniversalGravitation;
 
@@ -15,6 +16,12 @@ public class NewtonUniversalGravitationBuilder extends Builder<NewtonUniversalGr
         Objects.requireNonNull(data);
         if(super.type == TypeTag.NLUG) {
             newtonUniversalGravitation = new NewtonUniversalGravitation();
+            try {
+                double g = data.getDouble("G");
+                newtonUniversalGravitation = new NewtonUniversalGravitation(g);
+            } catch (JSONException jsonException) {
+                newtonUniversalGravitation = new NewtonUniversalGravitation();
+            }
             return newtonUniversalGravitation;
         } else
             throw new IllegalArgumentException("Typetag doesn't match with the builder constructor!");
