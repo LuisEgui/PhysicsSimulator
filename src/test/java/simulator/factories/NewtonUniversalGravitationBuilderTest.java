@@ -16,16 +16,25 @@ class NewtonUniversalGravitationBuilderTest {
     @BeforeEach
     void before() {
         info.put("type", "nlug");
-        data.put("G", 6.67e10-11);
+        data.put("G", 3.35e10-11);
         newtonUniversalGravitationBuilder = new NewtonUniversalGravitationBuilder();
         newtonUniversalGravitation = new NewtonUniversalGravitation();
     }
 
     @Test
-    void testCreateInstance() {
+    void testCreateDefaultInstance() {
+        info.put("data", new JSONObject());
+        NewtonUniversalGravitation expectedForceLaw = new NewtonUniversalGravitation();
+        newtonUniversalGravitation = newtonUniversalGravitationBuilder.createInstance(info);
+        assertEquals(expectedForceLaw.getG(), newtonUniversalGravitation.getG());
+    }
+
+    @Test
+    void testCreateCustomInstance() {
         info.put("data", data);
-        NewtonUniversalGravitation expectedForceLaw = newtonUniversalGravitationBuilder.createInstance(info);
-        assertNotEquals(null, expectedForceLaw);
+        NewtonUniversalGravitation expectedForceLaw = new NewtonUniversalGravitation(3.35e10-11);
+        newtonUniversalGravitation = newtonUniversalGravitationBuilder.createInstance(info);
+        assertEquals(expectedForceLaw.getG(), newtonUniversalGravitation.getG());
     }
 
     @Test
