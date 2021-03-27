@@ -26,6 +26,12 @@ class NoForceBuilderTest {
     }
 
     @Test
+    void testGetDescription() {
+        String expectedDescription = "A force law that doesn't apply any aditional force";
+        assertEquals(expectedDescription, noForceBuilder.getDescription());
+    }
+
+    @Test
     void testInvalidCreateInstance() {
         info.put("type", "nlug");
         info.put("data", new JSONObject());

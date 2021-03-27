@@ -30,6 +30,12 @@ class NewtonUniversalGravitationBuilderTest {
     }
 
     @Test
+    void testGetDescription() {
+        String expectedDescription = "Newton's law of universal gravitation";
+        assertEquals(expectedDescription, newtonUniversalGravitationBuilder.getDescription());
+    }
+
+    @Test
     void testCreateCustomInstance() {
         info.put("data", data);
         NewtonUniversalGravitation expectedForceLaw = new NewtonUniversalGravitation(3.35e10-11);

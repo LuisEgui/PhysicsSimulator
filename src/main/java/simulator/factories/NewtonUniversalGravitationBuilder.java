@@ -28,13 +28,14 @@ public class NewtonUniversalGravitationBuilder extends Builder<NewtonUniversalGr
     }
 
     @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    @Override
     public JSONObject createData() {
-        JSONObject template = new JSONObject();
         JSONObject data = new JSONObject();
         data.put("G", newtonUniversalGravitation.getG());
-        template.put("type", super.type.toString().toLowerCase());
-        template.put("desc", DESCRIPTION);
-        template.put("data", data);
-        return template;
+        return data;
     }
 }

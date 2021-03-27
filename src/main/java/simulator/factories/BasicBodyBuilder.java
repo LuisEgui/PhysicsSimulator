@@ -32,11 +32,12 @@ public class BasicBodyBuilder extends Builder<Body> {
     }
 
     @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    @Override
     public JSONObject createData() {
-        JSONObject template = new JSONObject();
-        template.put("type", super.type.toString().toLowerCase());
-        template.put("desc", DESCRIPTION);
-        template.put("data", body.getState());
-        return template;
+        return body.getState();
     }
 }

@@ -90,4 +90,23 @@ public class MassLossingBody extends simulator.model.bodies.FluentBuilder.Body {
         return super.getState().put("freq", lossFrequency)
                 .put("factor", lossFactor);
     }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode;
+        if(result == 0) {
+            result = super.hashCode();
+            result = 31 * result + Double.hashCode(lossFactor);
+            result = 31 * result + Double.hashCode(lossFrequency);
+            hashCode = result;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean precondition = super.equals(obj);
+        MassLossingBody other = (MassLossingBody) obj;
+        return precondition && lossFactor == other.getLossFactor() && lossFrequency == other.getLossFrequency();
+    }
 }

@@ -41,6 +41,12 @@ class MassLossingBodyBuilderTest {
     }
 
     @Test
+    void testGetDescription() {
+        String expectedDescription = "A body that losses mass each time its moves!";
+        assertEquals(expectedDescription, massLossingBodyBuilder.getDescription());
+    }
+
+    @Test
     void testInvalidCreateInstance() {
         info.put("type", "basic");
         info.put("data", body.getState());

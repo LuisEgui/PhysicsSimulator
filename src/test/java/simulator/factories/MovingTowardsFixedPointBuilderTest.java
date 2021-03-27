@@ -33,6 +33,12 @@ class MovingTowardsFixedPointBuilderTest {
     }
 
     @Test
+    void testGetDescription() {
+        String expectedDescription = "A force law that does apply force to a fixed point in the space";
+        assertEquals(expectedDescription, forceLawBuilder.getDescription());
+    }
+
+    @Test
     void testCreateCustomInstance() {
         info.put("data", data);
         MovingTowardsFixedPoint expectedForceLaw = new MovingTowardsFixedPoint(new Vector2D(2,0), 5);

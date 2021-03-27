@@ -11,7 +11,7 @@ public abstract class Body {
     protected Vector2D force;
     protected Vector2D position;
     protected double mass;
-    private int hashCode;
+    protected int hashCode;
 
     protected Body(Builder<?> builder) {
         this.id = builder.id;

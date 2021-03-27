@@ -33,14 +33,15 @@ public class MovingTowardsFixedPointBuilder extends Builder<MovingTowardsFixedPo
     }
 
     @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    @Override
     public JSONObject createData() {
-        JSONObject template = new JSONObject();
         JSONObject data = new JSONObject();
         data.put("c", forceLaw.getOrigin().asJSONArray());
         data.put("g", forceLaw.getG());
-        template.put("type", super.type.toString().toLowerCase());
-        template.put("desc", DESCRIPTION);
-        template.put("data", data);
-        return template;
+        return data;
     }
 }

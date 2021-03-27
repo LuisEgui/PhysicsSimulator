@@ -35,6 +35,12 @@ class BasicBodyBuilderTest {
     }
 
     @Test
+    void testGetDescription() {
+        String expectedDescription = "Basic body";
+        assertEquals(expectedDescription, basicBodyBuilder.getDescription());
+    }
+
+    @Test
     void testInvalidCreateInstance() {
         info.put("type", "mlb");
         info.put("data", body.getState());

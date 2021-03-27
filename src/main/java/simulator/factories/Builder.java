@@ -7,7 +7,7 @@ public abstract class Builder<T> {
 
     protected TypeTag type;
 
-    public Builder() {
+    protected Builder() {
         // Nothing to initialize.
     }
 
@@ -18,9 +18,14 @@ public abstract class Builder<T> {
     }
 
     public JSONObject getBuilderInfo() {
-        return createData();
+        JSONObject template = new JSONObject();
+        template.put("type", type.toString().toLowerCase());
+        template.put("desc", getDescription());
+        template.put("data", createData());
+        return template;
     }
 
     public abstract T createTheInstance(JSONObject data);
     public abstract JSONObject createData();
+    public abstract String getDescription();
 }

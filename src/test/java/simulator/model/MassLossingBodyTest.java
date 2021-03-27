@@ -45,6 +45,22 @@ class MassLossingBodyTest {
     }
 
     @Test
+    void testEquals() {
+        MassLossingBody sameBody = new MassLossingBody.Builder().id(id).velocity(velocity).position(position).mass(mass)
+                .lossFactor(lossFactor).lossFrequency(lossFrequency)
+                .build();
+        assertEquals(sameBody, body);
+    }
+
+    @Test
+    void testNotEquals() {
+        MassLossingBody notSameBody = new MassLossingBody.Builder().id("b2").velocity(velocity).position(position).mass(mass)
+                .lossFactor(lossFactor).lossFrequency(lossFrequency)
+                .build();
+        assertNotEquals(notSameBody, body);
+    }
+
+    @Test
     void testBodyWithInvalidMass() {
         Throwable exception = assertThrows(IllegalArgumentException.class,
                 this::executeInvalidMass);
