@@ -49,7 +49,16 @@ class MassLossingBodyTest {
         MassLossingBody sameBody = new MassLossingBody.Builder().id(id).velocity(velocity).position(position).mass(mass)
                 .lossFactor(lossFactor).lossFrequency(lossFrequency)
                 .build();
+        Object obj = new Object();
+        Object nullObject = null;
         assertEquals(sameBody, body);
+        assertEquals(sameBody.hashCode(), body.hashCode());
+        assertEquals(sameBody, body);
+        assertTrue(sameBody.equals(body) && body.equals(sameBody));
+        assertNotEquals(null, body);
+        assertEquals(body, body);
+        assertNotEquals(body, obj);
+        assertNotEquals(body, nullObject);
         assertEquals(sameBody.hashCode(), body.hashCode());
     }
 
@@ -59,6 +68,7 @@ class MassLossingBodyTest {
                 .lossFactor(lossFactor).lossFrequency(lossFrequency)
                 .build();
         assertNotEquals(notSameBody, body);
+        assertNotEquals(notSameBody.hashCode(), body.hashCode());
         assertNotEquals(notSameBody.hashCode(), body.hashCode());
     }
 

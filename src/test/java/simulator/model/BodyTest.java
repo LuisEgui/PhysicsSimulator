@@ -80,12 +80,14 @@ class BodyTest {
                 .mass(mass).build();
         Body notEqualBody = new Body.Builder().id("b2").velocity(velocity).position(position)
                 .mass(mass).build();
+        Object obj = new Object();
+        Object nullObject = null;
         assertNotEquals(notEqualBody, body);
         assertEquals(expectedEqualsBody, body);
         assertTrue(expectedEqualsBody.equals(body) && body.equals(expectedEqualsBody));
-        assertNotEquals(null, body.equals(null));
-        assertEquals(true, body.equals(body));
-        assertFalse(body.equals("This is not a body class"));
+        assertNotEquals(body, nullObject);
+        assertEquals(body, body);
+        assertNotEquals(body, obj);
         assertEquals(expectedEqualsBody.hashCode(), body.hashCode());
         assertNotEquals(notEqualBody.hashCode(), body.hashCode());
     }
