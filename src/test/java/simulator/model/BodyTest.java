@@ -82,6 +82,12 @@ class BodyTest {
                 .mass(mass).build();
         assertNotEquals(notEqualBody, body);
         assertEquals(expectedEqualsBody, body);
+        assertTrue(expectedEqualsBody.equals(body) && body.equals(expectedEqualsBody));
+        assertNotEquals(null, body.equals(null));
+        assertEquals(true, body.equals(body));
+        assertFalse(body.equals("This is not a body class"));
+        assertEquals(expectedEqualsBody.hashCode(), body.hashCode());
+        assertNotEquals(notEqualBody.hashCode(), body.hashCode());
     }
 
     private void executeInvalidMass() {

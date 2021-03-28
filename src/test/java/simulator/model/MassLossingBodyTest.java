@@ -50,6 +50,7 @@ class MassLossingBodyTest {
                 .lossFactor(lossFactor).lossFrequency(lossFrequency)
                 .build();
         assertEquals(sameBody, body);
+        assertEquals(sameBody.hashCode(), body.hashCode());
     }
 
     @Test
@@ -58,6 +59,7 @@ class MassLossingBodyTest {
                 .lossFactor(lossFactor).lossFrequency(lossFrequency)
                 .build();
         assertNotEquals(notSameBody, body);
+        assertNotEquals(notSameBody.hashCode(), body.hashCode());
     }
 
     @Test
