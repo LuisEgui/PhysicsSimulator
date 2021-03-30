@@ -17,20 +17,23 @@ public class MassLossingBodyBuilder extends Builder<MassLossingBody> {
         Objects.requireNonNull(data);
 
         if(super.type == TypeTag.MLB) {
-            JSONArray jVelocity = data.getJSONArray("v");
-            JSONArray jPosition = data.getJSONArray("p");
-            String id = data.getString("id");
-            Vector2D velocity = new Vector2D((double) jVelocity.get(0), (double) jVelocity.get(1));
-            Vector2D position = new Vector2D((double) jPosition.get(0), (double) jPosition.get(1));
-            double mass = data.getDouble("m");
-            double lossFrequency = (double) data.get("freq");
-            double lossFactor = (double) data.get("factor");
-            body = new MassLossingBody.Builder().id(id).velocity(velocity).position(position).mass(mass)
-                    .lossFactor(lossFactor).lossFrequency(lossFrequency)
-                    .build();
-            return body;
+            return create(data);
         } else
             throw new IllegalArgumentException("Typetag doesn't match with the builder constructor!");
+    }
+
+    public MassLossingBody create(JSONObject data) {
+        JSONArray jVelocity = data.getJSONArray("v");
+        JSONArray jPosition = data.getJSONArray("p");
+        String id = data.getString("id");
+        Vector2D velocity = new Vector2D((double) jVelocity.get(0), (double) jVelocity.get(1));
+        Vector2D position = new Vector2D((double) jPosition.get(0), (double) jPosition.get(1));
+        double mass = data.getDouble("m");
+        double lossFrequency = (double) data.get("freq");
+        double lossFactor = (double) data.get("factor");
+        return new MassLossingBody.Builder().id(id).velocity(velocity).position(position).mass(mass)
+                .lossFactor(lossFactor).lossFrequency(lossFrequency)
+                .build();
     }
 
     @Override
