@@ -13,6 +13,10 @@ public class EpsilonEqualStates extends EqualStates {
         this.epsilon = epsilon;
     }
 
+    public double getEpsilon() {
+        return epsilon;
+    }
+
     @Override
     public boolean equalBodyList(List<Body> bodyListOne, List<Body> bodyListTwo) {
         List<Body> bodyList = bodyListOne.stream().filter(body2 -> bodyListTwo.stream()
