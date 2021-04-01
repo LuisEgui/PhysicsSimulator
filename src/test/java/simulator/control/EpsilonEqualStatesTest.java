@@ -8,8 +8,7 @@ import simulator.model.PhysicsSimulator;
 import simulator.model.bodies.Body;
 import simulator.model.forcelaws.MovingTowardsFixedPoint;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class EpsilonEqualStatesTest {
     EpsilonEqualStates epsilonEqualStates;
@@ -23,6 +22,12 @@ class EpsilonEqualStatesTest {
         info1 = createInfoTestData(1, 1, 2, 3.0e28, 3.0e28);
         info2 = createInfoTestData(1, 1,2, 3.0e28, 3.0e28);
         epsilonEqualStates = new EpsilonEqualStates(50);
+    }
+
+    @Test
+    void testEpsilonEqualStates() {
+        double expectedEps = 50;
+        assertEquals(expectedEps, epsilonEqualStates.getEpsilon());
     }
 
     @Test
