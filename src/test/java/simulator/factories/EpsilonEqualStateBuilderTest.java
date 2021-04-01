@@ -14,7 +14,7 @@ class EpsilonEqualStateBuilderTest {
 
     @BeforeEach
     void before() {
-        info.put("type", "nlug");
+        info.put("type", "epseq");
         data.put("eps", 0.1);
         epsilonEqualStateBuilder = new EpsilonEqualStateBuilder();
         epsilonEqualStates = new EpsilonEqualStates(0.1);
