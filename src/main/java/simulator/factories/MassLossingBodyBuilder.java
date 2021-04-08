@@ -26,7 +26,8 @@ public class MassLossingBodyBuilder extends Builder<MassLossingBody> {
         JSONArray jVelocity = data.getJSONArray("v");
         JSONArray jPosition = data.getJSONArray("p");
         String id = data.getString("id");
-        Vector2D velocity = new Vector2D((double) jVelocity.get(0), (double) jVelocity.get(1));
+        Vector2D velocity = new Vector2D(Double.parseDouble(jVelocity.get(0).toString()),
+                Double.parseDouble(jVelocity.get(1).toString()));
         Vector2D position = new Vector2D((double) jPosition.get(0), (double) jPosition.get(1));
         double mass = data.getDouble("m");
         double lossFrequency = (double) data.get("freq");
