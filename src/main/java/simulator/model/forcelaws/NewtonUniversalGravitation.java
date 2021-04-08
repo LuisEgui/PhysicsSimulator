@@ -27,10 +27,11 @@ public class NewtonUniversalGravitation implements ForceLaws {
         Vector2D force;
 
         for(int i = 0; i < bodies.size(); i++) {
-            for(int j = i+1; j < bodies.size(); j++) {
-                force = calculateForceBetweenBodies(bodies.get(i), bodies.get(j));
-                bodies.get(i).addForce(force);
-                bodies.get(j).addForce(force.scale(-1));
+            for(int j = 0; j < bodies.size(); j++) {
+                if(i != j) {
+                    force = calculateForceBetweenBodies(bodies.get(i), bodies.get(j));
+                    bodies.get(i).addForce(force);
+                }
             }
         }
 
@@ -41,7 +42,7 @@ public class NewtonUniversalGravitation implements ForceLaws {
     private Vector2D calculateForceBetweenBodies(Body bi, Body bj) {
         Vector2D direction = bj.getPosition().minus(bi.getPosition());
         Vector2D force = direction.unitVector();
-        force = force.scale(g* bi.getMass() * bj.getMass()).scale(1/Math.pow(direction.magnitude(), 2));
+        force = force.scale(g* bi.getMass() * bj.getMass() * 1/Math.pow(direction.magnitude(), 2));
         return force;
     }
 
