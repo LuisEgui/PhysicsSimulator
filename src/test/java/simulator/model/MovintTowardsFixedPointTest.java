@@ -42,8 +42,8 @@ class MovintTowardsFixedPointTest {
         Vector2D expectedForce;
         mtfp.apply(bodies);
         for (Body b : bodies) {
-            expectedForce = b.getPosition().scale(-G * b.getMass());
-            assertEquals(expectedForce, b.getForce());
+            expectedForce = mtfp.getOrigin().minus(b.getPosition()).unitVector().scale(b.getMass() * 9.81);
+            assertEquals(expectedForce.magnitude(), b.getForce().magnitude());
         }
     }
 }

@@ -39,11 +39,10 @@ public class MovingTowardsFixedPoint implements ForceLaws {
         }
 
         // Reset force for no mass bodies:
-        bs.stream().filter(body -> body.getMass() <= 0).forEach(Body::resetForce);
+        bodies.stream().filter(body -> body.getMass() <= 0).forEach(Body::resetForce);
     }
 
     private Vector2D calculateForceTowardsOrigin(Body bi) {
-        Vector2D direction = bi.getPosition().minus(origin);
-        return direction.scale(-g * bi.getMass());
+         return origin.minus(bi.getPosition()).unitVector().scale(g * bi.getMass());
     }
 }
