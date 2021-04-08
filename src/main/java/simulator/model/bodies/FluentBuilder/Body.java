@@ -100,8 +100,8 @@ public abstract class Body {
     public void move(double time) {
         if(time > 0) {
             Vector2D acceleration = force.scale(1/mass);
-            velocity = velocity.plus(acceleration.scale(time));
             position = position.plus(velocity.scale(time).plus(acceleration.scale(0.5*Math.pow(time, 2))));
+            velocity = velocity.plus(acceleration.scale(time));
         }
     }
 
@@ -111,6 +111,7 @@ public abstract class Body {
         state.put("p", position.asJSONArray());
         state.put("v", velocity.asJSONArray());
         state.put("m", String.valueOf(mass));
+        state.put("f", force.asJSONArray());
         return state;
     }
 
