@@ -10,7 +10,7 @@ public class MassEqualStateBuilder extends Builder<MassEqualStates> {
     private static final String DESCRIPTION = "A mass equal state comparator";
 
     public MassEqualStateBuilder() {
-        super();
+        super.type = TypeTag.MASSEQ;
     }
 
     @Override

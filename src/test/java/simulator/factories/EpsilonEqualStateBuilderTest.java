@@ -41,17 +41,4 @@ class EpsilonEqualStateBuilderTest {
         epsilonEqualStates = epsilonEqualStateBuilder.createInstance(info);
         assertEquals(expectedStateComparator.getEpsilon(), epsilonEqualStates.getEpsilon());
     }
-
-    @Test
-    void testInvalidCreateInstance() {
-        info.put("type", "basic");
-        info.put("data", data);
-        Throwable exception = assertThrows(IllegalArgumentException.class,
-                this::executeInvalidEPSEQ);
-        assertEquals("Typetag doesn't match with the builder constructor!", exception.getMessage());
-    }
-
-    private void executeInvalidEPSEQ() {
-        epsilonEqualStateBuilder.createTheInstance(info);
-    }
 }

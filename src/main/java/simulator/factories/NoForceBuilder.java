@@ -9,6 +9,10 @@ public class NoForceBuilder extends Builder<NoForce> {
 
     private static final String DESCRIPTION = "A force law that doesn't apply any aditional force";
 
+    public NoForceBuilder() {
+        super.type = TypeTag.NF;
+    }
+
     @Override
     public NoForce createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);

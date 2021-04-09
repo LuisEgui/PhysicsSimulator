@@ -10,6 +10,11 @@ public class NewtonUniversalGravitationBuilder extends Builder<NewtonUniversalGr
     private static final String DESCRIPTION = "Newton's law of universal gravitation";
     private NewtonUniversalGravitation newtonUniversalGravitation;
 
+    public NewtonUniversalGravitationBuilder() {
+        super.type = TypeTag.NLUG;
+        newtonUniversalGravitation = new NewtonUniversalGravitation();
+    }
+
     @Override
     public NewtonUniversalGravitation createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);

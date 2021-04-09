@@ -12,6 +12,11 @@ public class MovingTowardsFixedPointBuilder extends Builder<MovingTowardsFixedPo
     private static final String DESCRIPTION = "A force law that does apply force to a fixed point in the space";
     private MovingTowardsFixedPoint forceLaw;
 
+    public MovingTowardsFixedPointBuilder() {
+        super.type = TypeTag.MTCP;
+        forceLaw = new MovingTowardsFixedPoint();
+    }
+
     @Override
     public MovingTowardsFixedPoint createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);

@@ -12,10 +12,17 @@ public class MassLossingBodyBuilder extends Builder<MassLossingBody> {
     private static final String DESCRIPTION = "A body that losses mass each time its moves!";
     private MassLossingBody body;
 
+    public MassLossingBodyBuilder() {
+        super.type = TypeTag.MLB;
+        body = new MassLossingBody.Builder().id("").velocity(new Vector2D())
+                .position(new Vector2D()).mass(1.0)
+                .lossFactor(0.5).lossFrequency(0.5)
+                .build();
+    }
+
     @Override
     public MassLossingBody createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);
-
         if(super.type == TypeTag.MLB) {
             return create(data);
         } else
@@ -28,13 +35,15 @@ public class MassLossingBodyBuilder extends Builder<MassLossingBody> {
         String id = data.getString("id");
         Vector2D velocity = new Vector2D(Double.parseDouble(jVelocity.get(0).toString()),
                 Double.parseDouble(jVelocity.get(1).toString()));
-        Vector2D position = new Vector2D((double) jPosition.get(0), (double) jPosition.get(1));
+        Vector2D position = new Vector2D(Double.parseDouble(jPosition.get(0).toString()),
+                Double.parseDouble(jPosition.get(1).toString()));
         double mass = data.getDouble("m");
-        double lossFrequency = (double) data.get("freq");
-        double lossFactor = (double) data.get("factor");
-        return new MassLossingBody.Builder().id(id).velocity(velocity).position(position).mass(mass)
+        double lossFrequency = data.getDouble("freq");
+        double lossFactor = data.getDouble("factor");
+        body = new MassLossingBody.Builder().id(id).velocity(velocity).position(position).mass(mass)
                 .lossFactor(lossFactor).lossFrequency(lossFrequency)
                 .build();
+        return body;
     }
 
     @Override
