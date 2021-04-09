@@ -1,6 +1,5 @@
 package simulator.factories;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import simulator.control.EpsilonEqualStates;
 
@@ -12,19 +11,19 @@ public class EpsilonEqualStateBuilder extends Builder<EpsilonEqualStates> {
     private EpsilonEqualStates epsilonEqualStates;
 
     public EpsilonEqualStateBuilder() {
-        super();
+        super.type = TypeTag.EPSEQ;
+        epsilonEqualStates = new EpsilonEqualStates(0.5);
     }
 
     @Override
     public EpsilonEqualStates createTheInstance(JSONObject data) {
         Objects.requireNonNull(data);
         if(super.type == TypeTag.EPSEQ) {
-            try {
+            if(data.has("eps")) {
                 double eps = data.getDouble("eps");
                 epsilonEqualStates = new EpsilonEqualStates(eps);
-            } catch (JSONException jsonException) {
+            } else
                 epsilonEqualStates = new EpsilonEqualStates(0.0);
-            }
             return epsilonEqualStates;
         } else
             throw new IllegalArgumentException("Typetag doesn't match with the builder constructor!");

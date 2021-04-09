@@ -15,7 +15,9 @@ public class BasicBodyBuilder extends Builder<Body> {
     private Body body;
 
     public BasicBodyBuilder() {
-        super();
+        super.type = TypeTag.BASIC;
+        body = new Body.Builder().id("").velocity(new Vector2D())
+                .position(new Vector2D()).mass(1.0).build();
     }
 
     @Override

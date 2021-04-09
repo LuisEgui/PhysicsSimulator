@@ -41,10 +41,12 @@ public class Controller {
         PrintStream printStream = new PrintStream(output);
         printStream.println("{");
         printStream.println("\"states\": [");
-        for(int i = 1; i < steps; i++) {
-            printStream.println(physicsSimulator.getState().toString());
+        printStream.println(physicsSimulator.getState().toString());
+        printStream.println(",");
+        for(int i = 1; i <= steps; i++) {
             physicsSimulator.advance();
-            if(i < steps - 1)
+            printStream.println(physicsSimulator.getState().toString());
+            if(i < steps)
                 printStream.println(",");
         }
         printStream.println("]");
@@ -60,13 +62,15 @@ public class Controller {
         PrintStream printStream = new PrintStream(output);
         printStream.println("{");
         printStream.println("\"states\": [");
+        printStream.println(physicsSimulator.getState().toString());
+        printStream.println(",");
         JSONArray jsonExpectedOut = jsonOut.getJSONArray("states");
-        for(int i = 0; i < steps; i++) {
+        for(int i = 1; i <= steps; i++) {
+            physicsSimulator.advance();
             if(!comparator.compare(physicsSimulator.getState(), jsonExpectedOut.getJSONObject(i)))
                 throw new InputMismatchException("Comparison failed");
             printStream.println(physicsSimulator.getState().toString());
-            physicsSimulator.advance();
-            if(i < steps - 1)
+            if(i < steps)
                 printStream.println(",");
         }
         printStream.println("]");
