@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class MovingTowardsFixedPointBuilder extends Builder<MovingTowardsFixedPoint> {
 
-    private static final String DESCRIPTION = "A force law that does apply force to a fixed point in the space";
+    private static final String DESCRIPTION = "Moving towards a fixed point";
     private MovingTowardsFixedPoint forceLaw;
 
     public MovingTowardsFixedPointBuilder() {
@@ -43,8 +43,8 @@ public class MovingTowardsFixedPointBuilder extends Builder<MovingTowardsFixedPo
     @Override
     public JSONObject createData() {
         JSONObject data = new JSONObject();
-        data.put("c", forceLaw.getOrigin().asJSONArray());
-        data.put("g", forceLaw.getG());
+        data.put("c", "the point towards which bodies move (" + forceLaw.getOrigin().asJSONArray() + ")");
+        data.put("g", "the length of the acceleration vector (" + forceLaw.getG() + ")");
         return data;
     }
 }

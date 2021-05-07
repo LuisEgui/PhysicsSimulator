@@ -38,7 +38,7 @@ public class NewtonUniversalGravitationBuilder extends Builder<NewtonUniversalGr
     @Override
     public JSONObject createData() {
         JSONObject data = new JSONObject();
-        data.put("G", newtonUniversalGravitation.getG());
+        data.put("G", "the gravitational constant (" + newtonUniversalGravitation.getG() + ")");
         return data;
     }
 }
