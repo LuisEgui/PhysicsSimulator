@@ -45,4 +45,9 @@ public class MovingTowardsFixedPoint implements ForceLaws {
     private Vector2D calculateForceTowardsOrigin(Body bi) {
          return origin.minus(bi.getPosition()).unitVector().scale(g * bi.getMass());
     }
+
+    @Override
+    public String toString() {
+        return "Moving towards" + origin.toString() + "with constant acceleration" + g;
+    }
 }

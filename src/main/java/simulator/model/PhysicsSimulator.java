@@ -13,8 +13,8 @@ public class PhysicsSimulator {
 
     private List<Body> bodies;
     private double actualTime;
-    private final double realTimePerStep;
-    private final ForceLaws forceLaw;
+    private double realTimePerStep;
+    private ForceLaws forceLaw;
 
     public PhysicsSimulator(double realTimePerStep, ForceLaws forceLaw) {
         Objects.requireNonNull(forceLaw);
@@ -51,6 +51,22 @@ public class PhysicsSimulator {
         state.put("time", actualTime);
         state.put("bodies", jBodies);
         return state;
+    }
+
+    public void reset() {
+        bodies.clear();
+        actualTime = 0;
+    }
+
+    public void setRealTimePerStep(double realTimePerStep) {
+        if(realTimePerStep < 0)
+            throw new IllegalArgumentException("realTimePerStep must be > 0");
+        this.realTimePerStep = realTimePerStep;
+    }
+
+    public void setForceLaw(ForceLaws forceLaw) {
+        Objects.requireNonNull(forceLaw);
+        this.forceLaw = forceLaw;
     }
 
     @Override
