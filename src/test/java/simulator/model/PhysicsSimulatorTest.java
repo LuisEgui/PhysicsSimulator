@@ -60,4 +60,35 @@ class PhysicsSimulatorTest {
         physicsSimulator.advance();
         assertEquals(expectedForce.magnitude(), b2.getForce().magnitude());
     }
+
+    @Test
+    void testReset() {
+        physicsSimulator.addBody(b1);
+        physicsSimulator.addBody(b2);
+        physicsSimulator.reset();
+        assertDoesNotThrow(() -> physicsSimulator.addBody(b1));
+    }
+
+    private void executeInvalidRealTime() {
+        physicsSimulator.setRealTimePerStep(-5);
+    }
+
+    @Test
+    void testSetRealTimePerStep() {
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                this::executeInvalidRealTime);
+        assertEquals("realTimePerStep must be > 0", exception.getMessage());
+        assertDoesNotThrow(() -> physicsSimulator.setRealTimePerStep(5.0));
+    }
+
+    private void executeInvalidForceLaw() {
+        physicsSimulator.setForceLaw(null);
+    }
+
+    @Test
+    void testSetForceLaw() {
+        Throwable exeption = assertThrows(NullPointerException.class,
+                this::executeInvalidForceLaw);
+        assertDoesNotThrow(() -> physicsSimulator.setForceLaw(mtfp));
+    }
 }
