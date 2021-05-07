@@ -15,6 +15,7 @@ public class PhysicsSimulator {
     private double actualTime;
     private double realTimePerStep;
     private ForceLaws forceLaw;
+    private List<SimulatorObserver> observers;
 
     public PhysicsSimulator(double realTimePerStep, ForceLaws forceLaw) {
         Objects.requireNonNull(forceLaw);
@@ -24,6 +25,7 @@ public class PhysicsSimulator {
         this.realTimePerStep = realTimePerStep;
         this.forceLaw = forceLaw;
         bodies = new ArrayList<>();
+        observers = new ArrayList<>();
     }
 
     public void advance() {
@@ -31,14 +33,17 @@ public class PhysicsSimulator {
         forceLaw.apply(bodies);
         bodies.forEach(body -> body.move(realTimePerStep));
         actualTime += realTimePerStep;
+        observers.forEach(observer -> observer.onAdvance(bodies, actualTime));
     }
 
     public void addBody(Body body) {
         Objects.requireNonNull(body);
         if(bodies.contains(body))
             throw new IllegalArgumentException("The body has already been added!");
-        else
+        else {
             bodies.add(body);
+            observers.forEach(observer -> observer.onBodyAdded(bodies, body));
+        }
     }
 
     public JSONObject getState() {
@@ -56,17 +61,28 @@ public class PhysicsSimulator {
     public void reset() {
         bodies.clear();
         actualTime = 0;
+        observers.forEach(observer -> observer.onReset(bodies, actualTime, realTimePerStep, forceLaw.toString()));
     }
 
     public void setRealTimePerStep(double realTimePerStep) {
         if(realTimePerStep < 0)
             throw new IllegalArgumentException("realTimePerStep must be > 0");
         this.realTimePerStep = realTimePerStep;
+        observers.forEach(observer -> observer.onDeltaTimeChanged(realTimePerStep));
     }
 
     public void setForceLaw(ForceLaws forceLaw) {
         Objects.requireNonNull(forceLaw);
         this.forceLaw = forceLaw;
+        observers.forEach(observer -> observer.onForceLawsChanged(forceLaw.toString()));
+    }
+
+    public void addObserver(SimulatorObserver observer) {
+        Objects.requireNonNull(observer);
+        if(!observers.contains(observer)) {
+            observers.add(observer);
+            observer.onRegister(bodies,actualTime, realTimePerStep, forceLaw.toString());
+        }
     }
 
     @Override
