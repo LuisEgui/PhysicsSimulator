@@ -25,7 +25,7 @@ public class MovingTowardsFixedPointBuilder extends Builder<MovingTowardsFixedPo
         if(super.type == TypeTag.MTCP) {
             if(data.has("c") && data.has("g")) {
                 JSONArray jOrigin = data.getJSONArray("c");
-                origin = new Vector2D((double) jOrigin.get(0), (double) jOrigin.get(1));
+                origin = new Vector2D(Double.parseDouble(jOrigin.get(0).toString()), Double.parseDouble(jOrigin.get(1).toString()));
                 g = data.getDouble("g");
                 forceLaw = new MovingTowardsFixedPoint(origin, g);
             } else

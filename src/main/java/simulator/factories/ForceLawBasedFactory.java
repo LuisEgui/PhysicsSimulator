@@ -32,7 +32,11 @@ public class ForceLawBasedFactory implements Factory<ForceLaws> {
     public List<JSONObject> getInfo() {
         List<JSONObject> overallBuildersInfo = new ArrayList<>();
         for(Builder<? extends ForceLaws> builder : builders) {
-            overallBuildersInfo.add(builder.getBuilderInfo());
+            try {
+                overallBuildersInfo.add(builder.getBuilderInfo());
+            } catch (NullPointerException ignored) {
+                // Nothing to do.
+            }
         }
         return overallBuildersInfo;
     }
