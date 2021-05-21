@@ -5,23 +5,45 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import simulator.factories.Factory;
 import simulator.model.PhysicsSimulator;
+import simulator.model.SimulatorObserver;
 import simulator.model.bodies.FluentBuilder.Body;
+import simulator.model.forcelaws.ForceLaws;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Objects;
 
 public class Controller {
 
     private PhysicsSimulator physicsSimulator;
-    private Factory<? extends Body> factory;
+    private Factory<? extends Body> bodyFactory;
+    private Factory<ForceLaws> forceLawsFactory;
 
-    public Controller(PhysicsSimulator physicsSimulator, Factory<? extends Body> factory) {
-        Objects.requireNonNull(physicsSimulator); Objects.requireNonNull(factory);
+    public Controller(PhysicsSimulator physicsSimulator, Factory<? extends Body> bodyFactory, Factory<ForceLaws> forceLawsFactory) {
+        Objects.requireNonNull(physicsSimulator); Objects.requireNonNull(bodyFactory);
         this.physicsSimulator = physicsSimulator;
-        this.factory = factory;
+        this.bodyFactory = bodyFactory;
+        this.forceLawsFactory = forceLawsFactory;
+    }
+
+    public List<JSONObject> getForceLawInfo() {
+        return forceLawsFactory.getInfo();
+    }
+
+    public void setForceLaws(JSONObject info) {
+        Objects.requireNonNull(info);
+        physicsSimulator.setForceLaw(forceLawsFactory.createInstance(info));
+    }
+
+    public void setDeltaTime(double deltaTime) {
+        physicsSimulator.setRealTimePerStep(deltaTime);
+    }
+
+    public void addObserver(SimulatorObserver observer) {
+        physicsSimulator.addObserver(observer);
     }
 
     public void loadBodies(InputStream in) {
@@ -30,8 +52,19 @@ public class Controller {
         JSONArray bodies = jsonInput.getJSONArray("bodies");
         for(int i = 0; i < bodies.length(); i++) {
             JSONObject jBody = bodies.getJSONObject(i);
-            physicsSimulator.addBody(factory.createInstance(jBody));
+            physicsSimulator.addBody(bodyFactory.createInstance(jBody));
         }
+    }
+
+    public void reset() {
+        physicsSimulator.reset();
+    }
+
+    public void run(int steps) {
+        if(steps < 0)
+            throw new IllegalArgumentException("Can not execute negative number steps!");
+        for(int i = 0; i < steps; i++)
+            physicsSimulator.advance();
     }
 
     public void run(int steps, OutputStream output) {

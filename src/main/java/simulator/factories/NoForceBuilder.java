@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class NoForceBuilder extends Builder<NoForce> {
 
-    private static final String DESCRIPTION = "A force law that doesn't apply any aditional force";
+    private static final String DESCRIPTION = "No Force";
 
     public NoForceBuilder() {
         super.type = TypeTag.NF;

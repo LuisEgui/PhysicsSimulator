@@ -81,7 +81,7 @@ public class PhysicsSimulator {
         Objects.requireNonNull(observer);
         if(!observers.contains(observer)) {
             observers.add(observer);
-            observer.onRegister(bodies,actualTime, realTimePerStep, forceLaw.toString());
+            observer.onRegister(bodies, actualTime, realTimePerStep, forceLaw.toString());
         }
     }
 

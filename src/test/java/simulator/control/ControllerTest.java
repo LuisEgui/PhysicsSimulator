@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import simulator.factories.*;
 import simulator.model.PhysicsSimulator;
 import simulator.model.bodies.FluentBuilder.Body;
+import simulator.model.forcelaws.ForceLaws;
 import simulator.model.forcelaws.MovingTowardsFixedPoint;
 import simulator.model.forcelaws.NewtonUniversalGravitation;
 
@@ -17,7 +18,9 @@ class ControllerTest {
     Controller controller;
     PhysicsSimulator physicsSimulator;
     List<Builder<? extends Body>> bodyBuilders;
-    Factory<? extends Body> factory;
+    Factory<? extends Body> bodyFactory;
+    List<Builder<? extends ForceLaws>> forceLawBuilders;
+    Factory<ForceLaws> forceLawsFactory;
 
     @BeforeEach
     void before() {
@@ -26,8 +29,12 @@ class ControllerTest {
         bodyBuilders = new ArrayList<>();
         bodyBuilders.add(new MassLossingBodyBuilder());
         bodyBuilders.add(new BasicBodyBuilder());
-        factory = new BodyBasedFactory(bodyBuilders);
-        controller = new Controller(physicsSimulator, factory);
+        bodyFactory = new BodyBasedFactory(bodyBuilders);
+        forceLawBuilders = new ArrayList<>();
+        forceLawBuilders.add(new NewtonUniversalGravitationBuilder());
+        forceLawBuilders.add(new NoForceBuilder());
+        forceLawsFactory = new ForceLawBasedFactory(forceLawBuilders);
+        controller = new Controller(physicsSimulator, bodyFactory, forceLawsFactory);
     }
 
     @Test
@@ -80,7 +87,7 @@ class ControllerTest {
         try {
             MovingTowardsFixedPoint mtfp = new MovingTowardsFixedPoint();
             physicsSimulator = new PhysicsSimulator(10000, mtfp);
-            controller = new Controller(physicsSimulator, factory);
+            controller = new Controller(physicsSimulator, bodyFactory, forceLawsFactory);
             InputStream in = new FileInputStream("resources/examples/ex1.2body.json");
             controller.loadBodies(in);
         } catch (FileNotFoundException fileNotFoundException) {
@@ -101,7 +108,7 @@ class ControllerTest {
         try {
             MovingTowardsFixedPoint mtfp = new MovingTowardsFixedPoint();
             physicsSimulator = new PhysicsSimulator(10000, mtfp);
-            controller = new Controller(physicsSimulator, factory);
+            controller = new Controller(physicsSimulator, bodyFactory, forceLawsFactory);
             InputStream in = new FileInputStream("resources/examples/ex1.2body.json");
             controller.loadBodies(in);
         } catch (FileNotFoundException fileNotFoundException) {
@@ -139,6 +146,17 @@ class ControllerTest {
         });
     }
 
+    private void executeInvalidSteps() {
+        EpsilonEqualStates eps = new EpsilonEqualStates(0.1);
+        try {
+            OutputStream out = new FileOutputStream("resources/output/myout.json");
+            InputStream expectedOut = new FileInputStream("resources/output/out.1.json");
+            controller.run(-5, expectedOut, out, eps);
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+        }
+    }
+
     @Test
     void testInvalidStepsRun() {
         try {
@@ -152,14 +170,20 @@ class ControllerTest {
         assertEquals("Can not execute negative number steps!", exception.getMessage());
     }
 
-    private void executeInvalidSteps() {
-        EpsilonEqualStates eps = new EpsilonEqualStates(0.1);
+    private void executeInvalidInvalidSteps_NoOutput() {
+        controller.run(-5);
+    }
+
+    @Test
+    void testInvalidStepsRun_NoOutput(){
         try {
-            OutputStream out = new FileOutputStream("resources/output/myout.json");
-            InputStream expectedOut = new FileInputStream("resources/output/out.1.json");
-            controller.run(-5, expectedOut, out, eps);
+            InputStream in = new FileInputStream("resources/examples/ex1.2body.json");
+            controller.loadBodies(in);
         } catch (FileNotFoundException exception) {
             exception.printStackTrace();
         }
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                this::executeInvalidInvalidSteps_NoOutput);
+        assertEquals("Can not execute negative number steps!", exception.getMessage());
     }
 }

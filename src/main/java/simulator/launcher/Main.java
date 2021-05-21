@@ -15,8 +15,11 @@ import simulator.factories.*;
 import simulator.model.PhysicsSimulator;
 import simulator.model.bodies.FluentBuilder.Body;
 import simulator.model.forcelaws.ForceLaws;
+import simulator.views.MainWindow;
 
+import javax.swing.*;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class Main {
 	private static Double deltaTime = null;
 	private static String inFile = null;
 	private static String outFile = null;
+	private static String mode = null;
 	private static String expectedOutputFile = null;
 	private static Integer steps = null;
 	private static JSONObject forceLawsInfo = null;
@@ -75,13 +79,19 @@ public class Main {
 			CommandLine line = parser.parse(cmdLineOptions, args);
 
 			parseHelpOption(line, cmdLineOptions);
+			parseModeOption(line);
 			parseInFileOption(line);
-			parseOutputFileOption(line);
-			parseStepsOption(line);
-			parseExpectedOutput(line);
+
+			if(mode.equals("batch")) {
+				parseOutputFileOption(line);
+				parseStepsOption(line);
+				parseExpectedOutput(line);
+			}
+
 			parseDeltaTimeOption(line);
 			parseForceLawsOption(line);
 			parseStateComparatorOption(line);
+
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -139,6 +149,9 @@ public class Main {
 						+ STATE_COMPARATOR_DEFAULT_VALUE + "'.")
 				.build());
 
+		// Mode option
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Execution Mode. Possible values; 'batch' 'gui'").build());
+
 		return cmdLineOptions;
 	}
 
@@ -169,7 +182,7 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
 		inFile = line.getOptionValue("i");
-		if (inFile == null) {
+		if (inFile == null && mode.equals("batch")) {
 			throw new ParseException("In batch mode an input file of bodies is required");
 		}
 	}
@@ -253,13 +266,20 @@ public class Main {
 		}
 	}
 
+	private static void parseModeOption(CommandLine line) throws ParseException {
+		mode = line.getOptionValue("m", "batch");
+		if (!mode.equals("batch") && !mode.equals("gui")) {
+			throw new ParseException("In both modes a mode input is required");
+		}
+	}
+
 	private static void startBatchMode() {
 		try {
 			InputStream inputFile = new FileInputStream(inFile);
 			OutputStream outputFile = outFile == null ? System.out : new FileOutputStream(outFile);
 			ForceLaws forceLaws = forceLawsFactory.createInstance(forceLawsInfo);
 			PhysicsSimulator physicsSimulator = new PhysicsSimulator(deltaTime, forceLaws);
-			Controller controller = new Controller(physicsSimulator, bodyFactory);
+			Controller controller = new Controller(physicsSimulator, bodyFactory, forceLawsFactory);
 			controller.loadBodies(inputFile);
 			if(expectedOutputFile == null)
 				controller.run(steps, outputFile);
@@ -273,9 +293,30 @@ public class Main {
 		}
 	}
 
-	private static void start(String[] args) {
+	private static void startGUIMode() throws InterruptedException, InvocationTargetException, FileNotFoundException {
+		ForceLaws force = forceLawsFactory.createInstance(forceLawsInfo);
+		PhysicsSimulator simulator = new PhysicsSimulator(deltaTime, force);
+		Controller controller = new Controller(simulator, bodyFactory, forceLawsFactory);
+
+		if(inFile != null) {
+			InputStream inputFile = new FileInputStream(inFile);
+			controller.loadBodies(inputFile);
+		}
+
+		SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+				new MainWindow(controller);
+			}
+		});
+	}
+
+	private static void start(String[] args) throws FileNotFoundException, InterruptedException, InvocationTargetException {
 		parseArgs(args);
-		startBatchMode();
+		if(mode.equals("batch"))
+			startBatchMode();
+		else
+			startGUIMode();
 	}
 
 	public static void main(String[] args) {
