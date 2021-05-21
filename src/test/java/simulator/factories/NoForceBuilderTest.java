@@ -28,7 +28,7 @@ class NoForceBuilderTest {
 
     @Test
     void testGetDescription() {
-        String expectedDescription = "A force law that doesn't apply any aditional force";
+        String expectedDescription = "No Force";
         assertEquals(expectedDescription, noForceBuilder.getDescription());
     }
 

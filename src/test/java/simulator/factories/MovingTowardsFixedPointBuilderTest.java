@@ -34,7 +34,7 @@ class MovingTowardsFixedPointBuilderTest {
 
     @Test
     void testGetDescription() {
-        String expectedDescription = "A force law that does apply force to a fixed point in the space";
+        String expectedDescription = "Moving towards a fixed point";
         assertEquals(expectedDescription, forceLawBuilder.getDescription());
     }
 
